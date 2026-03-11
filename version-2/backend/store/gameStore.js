@@ -1,0 +1,3 @@
+const liveGames={};
+
+export {liveGames}

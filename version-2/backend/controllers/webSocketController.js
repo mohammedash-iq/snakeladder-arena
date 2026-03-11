@@ -1,20 +1,19 @@
-const waitingList = []
-const games = {};
+import GameRoom from "../class/Game.js"
+import { liveGames } from "../store/gameStore.js";
+
+const waitingList = [];
 function handleWebSocketConnections(socket) {
     if (waitingList.length === 0) {
         waitingList.push(socket);
-        socket.send("Waiting for other player")
+        socket.send(JSON.stringify({ "waiting": true }))
     }
     else {
-        const id = crypto.randomUUID();
-        const p1 = socket;
-        const p2 = waitingList.shift();
-        games[id] = { "player1": p1, "palyer2": p2 };
-        // we send the room id and other details to the user
-        p1.send("you are ready to play");
-        p2.send("you are ready to paly");
+        const roomId = crypto.randomUUID();
+        const player1 = socket;
+        const player2 = waitingList.shift();
+        console.log(player1)
+        liveGames[roomId] = new GameRoom(player1, player2);
+        liveGames[roomId].startGame(roomId);
     }
 }
-
-
 export { handleWebSocketConnections };
