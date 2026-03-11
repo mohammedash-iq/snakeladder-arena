@@ -1,15 +1,17 @@
-import Board from "./components/Board"
-import GameDetails from "./components/GameDetails"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Lobby from "./pages/Lobby";
+import Arena from "./pages/Arena";
+
 
 function App() {
 
     return (
-        <div className="game-container">
-            <Board></Board>
-            <div className="sidebar">
-                <GameDetails></GameDetails>
-            </div>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/arena" element={<Arena />}></Route>
+                <Route path="/" element={<Lobby />}></Route>
+            </Routes>
+        </BrowserRouter>
     )
 }
 
