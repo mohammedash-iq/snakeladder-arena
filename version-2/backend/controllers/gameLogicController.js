@@ -11,7 +11,8 @@ const ladders = {
 
 function handleDiceRoll(gamedata, player) {
     const GameRoom = liveGames[gamedata.roomId];
-    if (GameRoom.currentplayer === player) {
+    const diceResult = rollDice();
+    if (GameRoom.currentPlayer === player) {
         if (player === 1) {
             const newPosition = updatePlayerPostion(diceResult, GameRoom.player1position);
             if (newPosition === 100) {
@@ -46,6 +47,10 @@ function updatePlayerPostion(diceResult, playerposition) {
         return snakes[newPosition];
     }
     return newPosition;
+}
+function rollDice() {
+    const randInt = Math.random() * (7 - 1) + 1;
+    return Math.floor(randInt);
 }
 
 export { handleDiceRoll }

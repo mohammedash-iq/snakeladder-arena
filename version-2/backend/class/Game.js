@@ -8,7 +8,9 @@ export default class GameRoom {
     }
     startGame(roomId) {
         this.player1.send(JSON.stringify({ "start-game": true, "roomId": roomId }));
+        this.player1.player = 1;
         this.player2.send(JSON.stringify({ "start-game": true, "roomId": roomId }));
+        this.player2.player = 2;
     }
     endGame(player) {
         if (player === 1) {
@@ -21,14 +23,14 @@ export default class GameRoom {
     updatePosition(position) {
         if (this.currentPlayer === 1) {
             this.player1position = position;
-            this.currentPlayer = 1;
-            this.player1.send(JSON.stringify({ "player1position": this.player1position, "player2Position": this.player2position }))
+            this.currentPlayer = 2;
         }
         else {
             this.player2position = position;
             this.currentPlayer = 1;
-            this.player1.send(JSON.stringify({ "player1position": this.player1position, "player2Position": this.player2position }))
         }
+        this.player2.send(JSON.stringify({ "player1position": this.player1position, "player2Position": this.player2position }))
+        this.player1.send(JSON.stringify({ "player1position": this.player1position, "player2Position": this.player2position }))
     }
     notValidMove(message) {
         if (this.currentPlayer === 1) {

@@ -8,7 +8,8 @@ websocket.on("connection", (socket) => {
     handleWebSocketConnections(socket);
     socket.on("message", (data) => {
         const parsedData = JSON.parse(data.toString());
-        if (parsedData.roll) {
+        
+        if (parsedData.type==="roll") {
             //socket.player is created when the connection is established and handle webSocketconnections is called.
             handleDiceRoll(parsedData, socket.player)
         }

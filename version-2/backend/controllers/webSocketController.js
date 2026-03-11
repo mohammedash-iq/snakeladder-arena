@@ -11,7 +11,6 @@ function handleWebSocketConnections(socket) {
         const roomId = crypto.randomUUID();
         const player1 = socket;
         const player2 = waitingList.shift();
-        console.log(player1)
         liveGames[roomId] = new GameRoom(player1, player2);
         liveGames[roomId].startGame(roomId);
     }
