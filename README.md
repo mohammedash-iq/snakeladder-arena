@@ -6,7 +6,7 @@ Players can join the same game room and compete with friends online while the se
 
 ---
 
-## 🎮 Features
+##  Features
 
 - Real-time multiplayer gameplay
 - Dice roll system
@@ -19,7 +19,7 @@ Players can join the same game room and compete with friends online while the se
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 ### Frontend
 - React
