@@ -1,7 +1,9 @@
+import useSocket from "../store/connectionStore"
 function GameDetails() {
     function rollDice() {
-        //goes to server and asks it to roll the dice and updates the player movement and position
-        console.log("dice rolled")
+        const socketObj = useSocket.getState()
+        socketObj.socketConnection.send(JSON.stringify({ "type": "roll" }))
+        console.log("sent roll ws request")
     }
     return (
         <>
