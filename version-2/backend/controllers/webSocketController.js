@@ -3,9 +3,9 @@ import { liveGames } from "../store/gameStore.js";
 
 const waitingList = [];
 function handleWebSocketConnections(socket) {
-    if (waitingList.length === 0) {
+    if (waitingList.length === 0 || socket in waitingList) {
         waitingList.push(socket);
-        socket.send(JSON.stringify({ "waiting": true }))
+        socket.send(JSON.stringify({ "type": "waiting" }))
     }
     else {
         const roomId = crypto.randomUUID();
@@ -15,4 +15,13 @@ function handleWebSocketConnections(socket) {
         liveGames[roomId].startGame(roomId);
     }
 }
-export { handleWebSocketConnections };
+function handleWebSocketDisconnections(socket) {
+    if (waitingList.find((ele) => ele == socket)) {
+        waitingList.pop(socket);
+    }
+    else if (socket.gameData.roomId in liveGames) {
+        liveGames[socket.gameData.roomId].handleLostConnection({ leftPlayer: socket.gameData.player });
+        liveGames.pop(socket.gameData.roomId);
+    }
+}
+export { handleWebSocketConnections, handleWebSocketDisconnections };

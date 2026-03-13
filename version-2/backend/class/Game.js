@@ -7,17 +7,17 @@ export default class GameRoom {
         this.player2 = player2socket;
     }
     startGame(roomId) {
-        this.player1.send(JSON.stringify({ "start-game": true, "roomId": roomId }));
-        this.player1.player = 1;
-        this.player2.send(JSON.stringify({ "start-game": true, "roomId": roomId }));
-        this.player2.player = 2;
+        this.player1.send(JSON.stringify({ "type": "start", "roomId": roomId }));
+        this.player1.gameData = { "roomId": roomId, "player": 1 }
+        this.player2.send(JSON.stringify({ "type": "start", "roomId": roomId }));
+        this.player2.gameData = { "roomId": roomId, "player": 2 }
     }
     endGame(player) {
         if (player === 1) {
-            this.player1.send("you won")
+            this.player1.send(JSON.stringify({ "type": "win" }))
         }
         else {
-            this.player1.send("you won")
+            this.player1.send(JSON.stringify({ "type": "win" }))
         }
     }
     updatePosition(position) {
@@ -29,8 +29,13 @@ export default class GameRoom {
             this.player2position = position;
             this.currentPlayer = 1;
         }
-        this.player2.send(JSON.stringify({ "player1position": this.player1position, "player2Position": this.player2position }))
-        this.player1.send(JSON.stringify({ "player1position": this.player1position, "player2Position": this.player2position }))
+        this.player2.send(JSON.stringify({ "type": "move", "player1position": this.player1position, "player2Position": this.player2position }))
+        this.player1.send(JSON.stringify({ "type": "move", "player1position": this.player1position, "player2Position": this.player2position }))
+    }
+    notValidPlayer(player) {
+        if (player === 1) {
+            this.player1.send(JSON.stringify({ "type": "message", "content": "Not your move"! }))
+        }
     }
     notValidMove(message) {
         if (this.currentPlayer === 1) {
@@ -40,6 +45,14 @@ export default class GameRoom {
         else {
             this.player2.send(message)
             this.currentPlayer = 1;
+        }
+    }
+    handleLostConnection({ leftPlayer }) {
+        if (this.player1.gameData.player === leftPlayer) {
+            this.player2.send(JSON.stringify({ "type": "win", "content": "the other player left you win" }))
+        }
+        if (this.player2.gameData.player === leftPlayer) {
+            this.player1.send(JSON.stringify({ "type": "win", "content": "the other player left you win" }))
         }
     }
 }

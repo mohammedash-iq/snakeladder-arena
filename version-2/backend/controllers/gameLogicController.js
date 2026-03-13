@@ -9,33 +9,37 @@ const ladders = {
     36: 44, 51: 67, 71: 91, 80: 99, 85: 97
 };
 
-function handleDiceRoll(gamedata, player) {
-    const GameRoom = liveGames[gamedata.roomId];
+function handleDiceRoll(gamedata, gameData) {
+    const player = gameData.player;
+    const gameRoom = liveGames[gameData.roomId];
     const diceResult = rollDice();
-    if (GameRoom.currentPlayer === player) {
+    if (gameRoom.currentPlayer === player) {
         if (player === 1) {
-            const newPosition = updatePlayerPostion(diceResult, GameRoom.player1position);
+            const newPosition = updatePlayerPostion(diceResult, gameRoom.player1position);
             if (newPosition === 100) {
-                GameRoom.endGame(1)
+                gameRoom.endGame(1)
             }
             else if (newPosition > 100) {
-                GameRoom.notValidMove("Not a valid move!")
+                gameRoom.notValidMove("Not a valid move!")
             }
-            GameRoom.updatePosition(newPosition)
+            gameRoom.updatePosition(newPosition)
             return;
         }
         else {
-            const newPosition = updatePlayerPostion(diceResult, GameRoom.player2position)
+            const newPosition = updatePlayerPostion(diceResult, gameRoom.player2position)
             if (newPosition === 100) {
-                GameRoom.endGame(2)
+                gameRoom.endGame(2)
             }
             else if (newPosition > 100) {
-                GameRoom.notValidMove("Not a valid move!")
+                gameRoom.notValidMove("Not a valid move!")
             }
-            GameRoom.updatePosition(newPosition)
+            gameRoom.updatePosition(newPosition)
             return;
         }
 
+    }
+    else{
+        gameRoom.notValidPlayer(gameData.player)
     }
 }
 function updatePlayerPostion(diceResult, playerposition) {

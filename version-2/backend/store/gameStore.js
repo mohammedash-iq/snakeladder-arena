@@ -1,3 +1,3 @@
-const liveGames={};
+const liveGames=[];
 
 export {liveGames}
