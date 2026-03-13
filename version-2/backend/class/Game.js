@@ -34,7 +34,10 @@ export default class GameRoom {
     }
     notValidPlayer(player) {
         if (player === 1) {
-            this.player1.send(JSON.stringify({ "type": "message", "content": "Not your move"! }))
+            this.player1.send(JSON.stringify({ "type": "message", "content": "not your move!" }))
+        }
+        else {
+            this.player2.send(JSON.stringify({ "type": "message", "content": "not your move!" }))
         }
     }
     notValidMove(message) {
