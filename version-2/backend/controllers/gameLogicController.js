@@ -9,13 +9,13 @@ const ladders = {
     36: 44, 51: 67, 71: 91, 80: 99, 85: 97
 };
 
-function handleDiceRoll(gamedata, gameData) {
+function handleDiceRoll(gameData) {
     const player = gameData.player;
     const gameRoom = liveGames[gameData.roomId];
     const diceResult = rollDice();
     if (gameRoom.currentPlayer === player) {
         if (player === 1) {
-            const newPosition = updatePlayerPostion(diceResult, gameRoom.player1position);
+            const newPosition = updatePlayerPostion(diceResult, gameRoom.player1Position);
             if (newPosition === 100) {
                 gameRoom.endGame(1)
             }
@@ -26,7 +26,7 @@ function handleDiceRoll(gamedata, gameData) {
             return;
         }
         else {
-            const newPosition = updatePlayerPostion(diceResult, gameRoom.player2position)
+            const newPosition = updatePlayerPostion(diceResult, gameRoom.player2Position)
             if (newPosition === 100) {
                 gameRoom.endGame(2)
             }
@@ -38,7 +38,7 @@ function handleDiceRoll(gamedata, gameData) {
         }
 
     }
-    else{
+    else {
         gameRoom.notValidPlayer(gameData.player)
     }
 }

@@ -1,7 +1,7 @@
 export default class GameRoom {
     currentPlayer = 1;
-    player1position = 1;
-    player2position = 1;
+    player1Position = 1;
+    player2Position = 1;
     constructor(player1socket, player2socket) {
         this.player1 = player1socket;
         this.player2 = player2socket;
@@ -22,15 +22,15 @@ export default class GameRoom {
     }
     updatePosition(position) {
         if (this.currentPlayer === 1) {
-            this.player1position = position;
+            this.player1Position = position;
             this.currentPlayer = 2;
         }
         else {
-            this.player2position = position;
+            this.player2Position = position;
             this.currentPlayer = 1;
         }
-        this.player2.send(JSON.stringify({ "type": "move", "player1position": this.player1position, "player2Position": this.player2position }))
-        this.player1.send(JSON.stringify({ "type": "move", "player1position": this.player1position, "player2Position": this.player2position }))
+        this.player2.send(JSON.stringify({ "type": "move", "player1Position": this.player1Position, "player2Position": this.player2Position }))
+        this.player1.send(JSON.stringify({ "type": "move", "player1Position": this.player1Position, "player2Position": this.player2Position }))
     }
     notValidPlayer(player) {
         if (player === 1) {

@@ -9,7 +9,7 @@ websocket.on("connection", (socket) => {
     socket.on("message", (data) => {
         const parsedData = JSON.parse(data.toString());
         if (parsedData.type === "roll") {
-            handleDiceRoll(parsedData, socket.gameData)
+            handleDiceRoll(socket.gameData)
         }
     })
     socket.on("close", () => {
