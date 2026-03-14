@@ -13,4 +13,9 @@ const usePlayer = create((set) => ({
     updatePlayer: (newPos) => set({ player1: newPos.player1, player2: newPos.player2 })
 }))
 
-export { useSocket, usePlayer }
+const useUpdates = create((set) => ({
+    gameUpdates: "Game started",
+    updateGameUpdates: (newUpdate) => set({ gameUpdates: newUpdate })
+}))
+
+export { useSocket, usePlayer, useUpdates }

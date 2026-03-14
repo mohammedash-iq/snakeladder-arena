@@ -22,17 +22,17 @@ export default class GameRoom {
             this.player1.send(JSON.stringify({ "type": "lose" }))
         }
     }
-    updatePosition(position) {
+    updatePosition({ pos, message }) {
         if (this.currentPlayer === 1) {
-            this.player1Position = position;
+            this.player1Position = pos;
             this.currentPlayer = 2;
         }
         else {
-            this.player2Position = position;
+            this.player2Position = pos;
             this.currentPlayer = 1;
         }
-        this.player2.send(JSON.stringify({ "type": "move", "player1Position": this.player1Position, "player2Position": this.player2Position }))
-        this.player1.send(JSON.stringify({ "type": "move", "player1Position": this.player1Position, "player2Position": this.player2Position }))
+        this.player2.send(JSON.stringify({ "type": "move", "player1Position": this.player1Position, "player2Position": this.player2Position, "message": message }))
+        this.player1.send(JSON.stringify({ "type": "move", "player1Position": this.player1Position, "player2Position": this.player2Position, "message": message }))
     }
     notValidPlayer(player) {
         if (player === 1) {

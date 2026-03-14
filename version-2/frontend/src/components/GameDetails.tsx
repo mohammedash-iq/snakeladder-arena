@@ -1,7 +1,7 @@
 import { useSocket } from "../store/connectionStore"
 function GameDetails() {
     function rollDice() {
-        const socketObj = useSocket.getState()
+        const socketObj = useSocket((state)=>state.socketConnection)
         socketObj.socketConnection.send(JSON.stringify({ "type": "roll" }));
     }
     return (

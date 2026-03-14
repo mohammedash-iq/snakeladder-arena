@@ -15,8 +15,9 @@ function handleDiceRoll(gameData) {
     const diceResult = rollDice();
     if (gameRoom.currentPlayer === player) {
         if (player === 1) {
-            const newPosition = updatePlayerPostion(diceResult, gameRoom.player1Position);
+            const { newPosition, message } = updatePlayerPostion(diceResult, gameRoom.player1Position, player);
             if (newPosition === 100) {
+                gameRoom.updatePosition({ pos: newPosition, message: message })
                 gameRoom.endGame(1)
                 return;
             }
@@ -24,12 +25,13 @@ function handleDiceRoll(gameData) {
                 gameRoom.notValidMove("Not a valid move!")
                 return;
             }
-            gameRoom.updatePosition(newPosition)
+            gameRoom.updatePosition({ newPosition, message })
             return;
         }
         else {
             const newPosition = updatePlayerPostion(diceResult, gameRoom.player2Position)
             if (newPosition === 100) {
+                gameRoom.updatePosition(newPosition)
                 gameRoom.endGame(2)
             }
             else if (newPosition > 100) {
@@ -44,15 +46,15 @@ function handleDiceRoll(gameData) {
         gameRoom.notValidPlayer(gameData.player)
     }
 }
-function updatePlayerPostion(diceResult, playerposition) {
-    const newPosition = playerposition + diceResult;
-    if (newPosition in ladders) {
-        return ladders[newPosition];
+function updatePlayerPostion(diceResult, playerposition, player) {
+    const pos = playerposition + diceResult;
+    if (pos in ladders) {
+        return { "newPosition": ladders[pos], "message": `Player ${player} ->${playerposition} to ${newPosition} snake -> ${ladders[pos]}` };
     }
-    else if (newPosition in snakes) {
-        return snakes[newPosition];
+    else if (pos in snakes) {
+        return { "newPosition": snakes[pos], "message": `Player ${player} ->${playerposition} to ${newPosition} snake -> ${snakes[pos]}` };
     }
-    return newPosition;
+    return { "newPosition": pos, "message": `Player ${player} moved from ${playerposition} to ${newPosition}` };
 }
 function rollDice() {
     const randInt = Math.random() * (7 - 1) + 1;
