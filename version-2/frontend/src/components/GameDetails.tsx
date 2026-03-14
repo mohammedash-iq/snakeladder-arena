@@ -7,9 +7,14 @@ function GameDetails() {
     }
     return (
         <>
-            <button id="dice-btn" onClick={rollDice}> Roll Dice</button>
-            <p>Turn :You</p>
-            <p>Dice result: {diceVal}</p>
+            <div className=" p-2 bg-gray-100 rounded-lg">
+                <button onClick={rollDice} className="bg-blue-500 text-white font-semibold p-2 rounded-lg hover:bg-blue-600 flex"> Roll Dice </button>
+                <div className="text-gray-700">
+                    <p className=" text-center mt-2">Dice Result</p>
+                    <p className="text-2xl font-bold text-center text-gray-600">{diceVal}</p>
+                </div>
+
+            </div>
         </>
 
     )
