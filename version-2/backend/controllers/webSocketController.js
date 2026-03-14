@@ -20,7 +20,7 @@ function handleWebSocketDisconnections(socket) {
         waitingList.pop(socket);
     }
     else if (socket.gameData.roomId in liveGames) {
-        liveGames[socket.gameData.roomId].handleLostConnection({ leftPlayer: socket.gameData.player });
+        liveGames[socket.gameData.roomId].handleLostConnection({ leftPlayer: socket.gameData.player, content: "the other player left! you win" });
         liveGames.pop(socket.gameData.roomId);
     }
 }

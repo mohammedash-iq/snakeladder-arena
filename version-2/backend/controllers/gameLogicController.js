@@ -18,9 +18,11 @@ function handleDiceRoll(gameData) {
             const newPosition = updatePlayerPostion(diceResult, gameRoom.player1Position);
             if (newPosition === 100) {
                 gameRoom.endGame(1)
+                return;
             }
             else if (newPosition > 100) {
                 gameRoom.notValidMove("Not a valid move!")
+                return;
             }
             gameRoom.updatePosition(newPosition)
             return;

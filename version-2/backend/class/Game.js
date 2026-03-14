@@ -15,9 +15,11 @@ export default class GameRoom {
     endGame(player) {
         if (player === 1) {
             this.player1.send(JSON.stringify({ "type": "win" }))
+            this.player2.send(JSON.stringify({ "type": "lose" }))
         }
         else {
-            this.player1.send(JSON.stringify({ "type": "win" }))
+            this.player2.send(JSON.stringify({ "type": "win" }))
+            this.player1.send(JSON.stringify({ "type": "lose" }))
         }
     }
     updatePosition(position) {
