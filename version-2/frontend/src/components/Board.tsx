@@ -13,14 +13,21 @@ function Board() {
 export default Board
 
 function createBoard({ p1, p2 }) {
+  let samePos = p1 === p2 ? true : false;
   const boardArr = []
   for (let i: number = 0; i < 10; i = i + 2) {
     for (let j: number = (i + 1) * 10; j > i * 10; j--) {
-      const cssId = j === p1 ? "player-one-position" : j === p2 ? "player-two-position" : (p1 === p2 && p2 === j) ? "player-same-position" : "";
+      let cssId = j === p1 ? "player-one-position" : j === p2 ? "player-two-position" : "number-box";
+      if (samePos && j == p1) {
+        cssId = "player-same-position"
+      }
       boardArr.push(<BoardCube cssId={cssId} key={j} val={j}></BoardCube>)
     }
     for (let k: number = ((i + 1) * 10) + 1; k <= (i + 2) * 10; k++) {
-      const cssId = k === p1 ? "player-one-position" : k === p2 ? "player-two-position" : (p1 === p2 && p2 === k) ? "player-same-position" : "";
+      let cssId = k === p1 ? "player-one-position" : k === p2 ? "player-two-position" : "number-box";
+      if (samePos && k == p1) {
+        cssId = "player-same-position"
+      }
       boardArr.push(<BoardCube cssId={cssId} key={k} val={k}></BoardCube>)
     }
   }

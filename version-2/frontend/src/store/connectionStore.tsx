@@ -18,4 +18,8 @@ const useUpdates = create((set) => ({
     updateGameUpdates: (newUpdate) => set({ gameUpdates: newUpdate })
 }))
 
-export { useSocket, usePlayer, useUpdates }
+const useDice = create((set) => ({
+    diceVal: 0,
+    updateDiceVal: (newDiceVal) => set({ diceVal: newDiceVal })
+}))
+export { useSocket, usePlayer, useUpdates, useDice }
