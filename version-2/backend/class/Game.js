@@ -22,7 +22,7 @@ export default class GameRoom {
             this.player1.send(JSON.stringify({ "type": "lose" }))
         }
     }
-    updatePosition({ pos, message }) {
+    updatePosition({ pos, message, dice }) {
         if (this.currentPlayer === 1) {
             this.player1Position = pos;
             this.currentPlayer = 2;
@@ -31,24 +31,24 @@ export default class GameRoom {
             this.player2Position = pos;
             this.currentPlayer = 1;
         }
-        this.player2.send(JSON.stringify({ "type": "move", "player1Position": this.player1Position, "player2Position": this.player2Position, "message": message }))
-        this.player1.send(JSON.stringify({ "type": "move", "player1Position": this.player1Position, "player2Position": this.player2Position, "message": message }))
+        this.player2.send(JSON.stringify({ "type": "move", "player1Position": this.player1Position, "player2Position": this.player2Position, "message": message, "dice": dice }))
+        this.player1.send(JSON.stringify({ "type": "move", "player1Position": this.player1Position, "player2Position": this.player2Position, "message": message, "dice": dice }))
     }
     notValidPlayer(player) {
         if (player === 1) {
-            this.player1.send(JSON.stringify({ "type": "message", "content": "not your move!" }))
+            this.player1.send(JSON.stringify({ "type": "invalid-player", "message": "not your move!" }))
         }
         else {
-            this.player2.send(JSON.stringify({ "type": "message", "content": "not your move!" }))
+            this.player2.send(JSON.stringify({ "type": "invalid-player", "message": "not your move!" }))
         }
     }
-    notValidMove(message) {
+    notValidMove({ message, dice }) {
         if (this.currentPlayer === 1) {
-            this.player1.send(message);
+            this.player1.send(JSON.stringify({ "type": "invalid-move", "message": message, "dice": dice }));
             this.currentPlayer = 2;
         }
         else {
-            this.player2.send(message)
+            this.player2.send(JSON.stringify({ "type": "invalid-move", "message": message, "dice": dice }));
             this.currentPlayer = 1;
         }
     }

@@ -15,46 +15,47 @@ function handleDiceRoll(gameData) {
     const diceResult = rollDice();
     if (gameRoom.currentPlayer === player) {
         if (player === 1) {
-            const { newPosition, message } = updatePlayerPostion(diceResult, gameRoom.player1Position, player);
+            const { newPosition, message } = updatePlayerPostion(diceResult, gameRoom.player1Position, 1);
             if (newPosition === 100) {
-                gameRoom.updatePosition({ pos: newPosition, message: message })
+                gameRoom.updatePosition({ pos: newPosition, message: message, dice: diceResult })
                 gameRoom.endGame(1)
                 return;
             }
             else if (newPosition > 100) {
-                gameRoom.notValidMove("Not a valid move!")
+                gameRoom.notValidMove({ message: "Not a valid move", dice: diceResult })
                 return;
             }
-            gameRoom.updatePosition({ newPosition, message })
+            gameRoom.updatePosition({ pos: newPosition, message: message, dice: diceResult })
             return;
         }
         else {
-            const newPosition = updatePlayerPostion(diceResult, gameRoom.player2Position)
+            const { newPosition, message } = updatePlayerPostion(diceResult, gameRoom.player2Position, 2);
             if (newPosition === 100) {
-                gameRoom.updatePosition(newPosition)
+                gameRoom.updatePosition({ pos: newPosition, message: message, dice: diceResult })
                 gameRoom.endGame(2)
+                return;
             }
             else if (newPosition > 100) {
-                gameRoom.notValidMove("Not a valid move!")
+                gameRoom.notValidMove({ message: "Not a valid move", dice: diceResult })
+                return;
             }
-            gameRoom.updatePosition(newPosition)
+            gameRoom.updatePosition({ pos: newPosition, message: message, dice: diceResult })
             return;
         }
-
     }
     else {
-        gameRoom.notValidPlayer(gameData.player)
+        gameRoom.notValidPlayer(player);
     }
 }
 function updatePlayerPostion(diceResult, playerposition, player) {
     const pos = playerposition + diceResult;
     if (pos in ladders) {
-        return { "newPosition": ladders[pos], "message": `Player ${player} ->${playerposition} to ${newPosition} snake -> ${ladders[pos]}` };
+        return { "newPosition": ladders[pos], "message": `Player ${player} moved from${playerposition} to ${pos} (ladder ${ladders[pos]})` };
     }
     else if (pos in snakes) {
-        return { "newPosition": snakes[pos], "message": `Player ${player} ->${playerposition} to ${newPosition} snake -> ${snakes[pos]}` };
+        return { "newPosition": snakes[pos], "message": `Player ${player} moved from ${playerposition} to ${pos} (snake ${snakes[pos]})` };
     }
-    return { "newPosition": pos, "message": `Player ${player} moved from ${playerposition} to ${newPosition}` };
+    return { "newPosition": pos, "message": `Player ${player} moved from ${playerposition} to ${pos}` };
 }
 function rollDice() {
     const randInt = Math.random() * (7 - 1) + 1;
