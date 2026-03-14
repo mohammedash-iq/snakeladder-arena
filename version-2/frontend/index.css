@@ -1,44 +1,39 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: rgb(50, 50, 50);
-    color: antiquewhite;
+  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(50, 50, 50);
+  color: antiquewhite;
 }
 
 .game-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .board {
-    display: grid;
-    grid-template-columns: repeat(10, 60px);
-    grid-template-rows: repeat(10, 60px);
-    gap: 1px;
+  display: grid;
+  grid-template-columns: repeat(10, 60px);
+  grid-template-rows: repeat(10, 60px);
+  gap: 1px;
 }
 
 .board-cube {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ffe7e7;
-    font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ffe7e7;
+  font-size: 14px;
 }
 
 .sidebar {
-    padding: 2rem;
+  padding: 2rem;
 }
 
 /* player styles */
 
-.player-1-position-indicator {
-    background-image: linear-gradient(180deg, red, hsla(0, 0%, 100%, 0));
+#player-one-position {
+  background-image: linear-gradient(180deg, red, hsla(0, 0%, 100%, 0));
 }
-
-.player-2-position-indicator {
-    background-image: linear-gradient(0deg, blue, hsla(0, 0%, 100%, 0));
-}
-
-.two-player-indicator {
-    background-image: linear-gradient(180deg, red, blue);
+#player-two-position {
+  background-image: linear-gradient(0deg, blue, hsla(0, 0%, 100%, 0));
 }

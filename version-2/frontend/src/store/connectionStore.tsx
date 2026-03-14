@@ -7,4 +7,10 @@ const useSocket = create((set) => ({
     updateConnectionState: (newState) => set({ connectionState: newState })
 }))
 
-export default useSocket;
+const usePlayer = create((set) => ({
+    player1: 1,
+    player2: 1,
+    updatePlayer: (newPos) => set({ player1: newPos.player1, player2: newPos.player2 })
+}))
+
+export { useSocket, usePlayer }

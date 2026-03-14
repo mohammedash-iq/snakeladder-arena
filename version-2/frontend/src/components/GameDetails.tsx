@@ -1,9 +1,8 @@
-import useSocket from "../store/connectionStore"
+import { useSocket } from "../store/connectionStore"
 function GameDetails() {
     function rollDice() {
         const socketObj = useSocket.getState()
-        socketObj.socketConnection.send(JSON.stringify({ "type": "roll" }))
-        console.log("sent roll ws request")
+        socketObj.socketConnection.send(JSON.stringify({ "type": "roll" }));
     }
     return (
         <>

@@ -1,6 +1,7 @@
-import useSocket from "../store/connectionStore"
+import { useSocket, usePlayer } from "../store/connectionStore"
 function handleSocketRecieve({ navigateFunction }) {
     const socketStore = useSocket.getState();
+    const playerData = usePlayer.getState();
     const socket = new WebSocket("ws://localhost:8800");
     socketStore.updateSocketConnection(socket)
     socket.onopen = () => {
@@ -14,7 +15,7 @@ function handleSocketRecieve({ navigateFunction }) {
             navigateFunction("/waiting");
         }
         else if (parsedData.type === "message") {
-            console.log(parsedData.content)
+            alert(parsedData.content)
         }
         else if (parsedData.type === "win") {
             alert('You won')
@@ -24,7 +25,7 @@ function handleSocketRecieve({ navigateFunction }) {
             navigateFunction("/arena")
         }
         else if (parsedData.type === "move") {
-            console.log("control here")
+            playerData.updatePlayer({ player1: parsedData.player1Position, player2: parsedData.player2Position })
             console.log(parsedData)
         }
     }
