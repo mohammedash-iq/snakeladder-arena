@@ -1,4 +1,4 @@
-import {findLiveGames} from "../services/gameroomServices.js"
+import { findLiveGames } from "../services/gameroomServices.js"
 
 
 const snakes = {
@@ -12,8 +12,8 @@ const ladders = {
 };
 
 function handleStartGame({ socket1, socket2 }) {
-    socket1.send(JSON.stringify({ "type": "GAME-STARTED" }));
-    socket2.send(JSON.stringify({ "type": "GAME-STARTED" }));
+    socket1.send(JSON.stringify({ "type": "GAME-STARTED", "payload": { "message": "Game has started!" } }));
+    socket2.send(JSON.stringify({ "type": "GAME-STARTED", "payload": { "message": "Game has started!" } }));
 }
 
 function handlePlayerTurn({ playerSocketObject }) {
@@ -100,12 +100,12 @@ function rollDice() {
 // winning a match is handeled my this fuction
 function handleGameVictory({ gameroom, player }) {
     if (player === "P1") {
-        gameroom.P1.send(JSON.stringify({ "type": "WON" }));
-        gameroom.P2.send(JSON.stringify({ "type": "LOST" }));
+        gameroom.P1.send(JSON.stringify({ "type": "WON", "payload": { "message": "You won the game!" } }));
+        gameroom.P2.send(JSON.stringify({ "type": "LOST", "payload": { "message": "You lost the game!" } }));
     }
     else {
-        gameroom.P2.send(JSON.stringify({ "type": "WON" }));
-        gameroom.P1.send(JSON.stringify({ "type": "LOST" }));
+        gameroom.P2.send(JSON.stringify({ "type": "WON", "payload": { "message": "You won the game!" } }));
+        gameroom.P1.send(JSON.stringify({ "type": "LOST", "payload": { "message": "You lost the game!" } }));
     }
 }
 

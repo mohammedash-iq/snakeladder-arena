@@ -12,7 +12,7 @@ websocket.on("connection", (socket) => {
             handlePlayerTurn({ playerSocketObject: socket })
         }
         else if (parsedData.request === "END-GAME") {
-            //handleendgame
+            handleWebSocketDisconnections(socket);
         }
         else {
             socket.send(JSON.stringify({ "type": "ERROR", payload: { "error": "Not a valid socket request!" } }))

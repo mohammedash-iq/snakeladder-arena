@@ -131,7 +131,12 @@ function GameDetails() {
       JSON.stringify({ request: "DICE-ROLL" })
     );
   }
-
+  function handleLeaveGame() {
+    const socketObj = useSocket.getState();
+    socketObj.socketConnection.send(
+      JSON.stringify({ request: "END-GAME" })
+    );
+  }
   return (
     <div className="flex flex-col gap-4 rounded-3xl border border-[#e8e4df] bg-white p-5 shadow-sm">
       <div>
@@ -166,6 +171,7 @@ function GameDetails() {
         <div className="min-h-10 text-center text-sm font-medium leading-6 text-[#625d58]">
           {gameUpdates}
         </div>
+        <div><button className="w-full rounded-2xl bg-red-400 px-2 py-1 font-semibold text-[#3f4d5d] transition-colors hover:bg-[#abc1da] active:bg-[#9fb7d2]" onClick={handleLeaveGame}>Leave Game</button></div>
       </div>
     </div>
   );
