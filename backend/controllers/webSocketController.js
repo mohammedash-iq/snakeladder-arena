@@ -27,14 +27,12 @@ function handleWebSocketDisconnections(socket) {
     //checks the player in the gamerooms and gracefully realease the connection and lets the other player know the player has left.
     // the findLiveGames returns a object { found: boolena, object: the actual object}
     const gameroom = findLiveGames({ "socketToBeFound": socket });
-    console.log(gameroom.object.P1.readyState)
-    console.log(gameroom.object.P2.readyState)
     if (gameroom.found) {
         if (gameroom.object.P1 == socket) {
-            gameroom.object.P2.send(JSON.stringify({ "type": "WON" }))
+            gameroom.object.P2.send(JSON.stringify({ "type": "WON", "payload": { "message": "Player 1 left the match!, you won!" } }))
             return
         }
-        gameroom.object.P1.send(JSON.stringify({ "type": "WON" }))
+        gameroom.object.P1.send(JSON.stringify({ "type": "WON", "payload": { "message": "Player 1 left the match!, you won!" } }))
     }
 }
 export { handleWebSocketConnections, handleWebSocketDisconnections };

@@ -1,17 +1,21 @@
 import { useGameData } from "../store/connectionStore";
 
 function Board() {
-  const gameData = useGameData()
+  const gameData = useGameData();
   return (
-    <div className="flex flex-1 items-center justify-center rounded-3xl border border-[#e8e4df] bg-white p-5 shadow-sm">
-      {gameData.gameState === "won" ? <WonGame></WonGame> :
-        gameData.gameState === "lost" ? <LostGame></LostGame> :
-          <>{createBoard({ p1: gameData.P1POS, p2: gameData.P2POS })}</>}
+    <div className="flex flex-1 min-h-[400px] items-center justify-center rounded-3xl border border-[#e8e4df] bg-white p-5 shadow-sm">
+      {gameData.gameState === "won" ? (
+        <WonGame />
+      ) : gameData.gameState === "lost" ? (
+        <LostGame />
+      ) : (
+        <>{createBoard({ p1: gameData.P1POS, p2: gameData.P2POS })}</>
+      )}
     </div>
   );
 }
 
-function createBoard({ p1, p2 }) {
+function createBoard({ p1, p2 }: { p1: number; p2: number }) {
   const boardArr = [];
 
   for (let i: number = 0; i < 10; i = i + 2) {
@@ -31,11 +35,11 @@ function createBoard({ p1, p2 }) {
   );
 }
 
-function BoardCube({ val, pos }) {
-  const snakes: object = { 16: 6, 47: 26, 49: 11, 56: 53, 62: 19, 64: 60, 87: 24, 93: 73, 95: 75, 98: 78 };
-  const ladders: object = { 2: 38, 4: 14, 9: 31, 21: 42, 28: 84, 36: 44, 51: 67, 71: 91, 80: 99, 85: 97 };
+function BoardCube({ val, pos }: { val: number; pos: { p1: number; p2: number } }) {
+  const snakes: Record<number, number> = { 16: 6, 47: 26, 49: 11, 56: 53, 62: 19, 64: 60, 87: 24, 93: 73, 95: 75, 98: 78 };
+  const ladders: Record<number, number> = { 2: 38, 4: 14, 9: 31, 21: 42, 28: 84, 36: 44, 51: 67, 71: 91, 80: 99, 85: 97 };
 
-  let content = val;
+  let content: string | number = val;
   let bg = "bg-[#f7f5f2]";
 
   if (val in ladders) { content = "🪜"; bg = "bg-[#e4f1e5]"; }
@@ -55,19 +59,33 @@ function BoardCube({ val, pos }) {
     </div>
   );
 }
+
 function WonGame() {
   return (
-    <div>
-      Won Game
+    <div className="flex flex-col items-center justify-center text-center p-6 max-w-sm">
+      <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-[#f8edc9] border border-[#ebd89f] text-5xl shadow-sm animate-bounce">
+        🏆
+      </div>
+      <span className="text-xs font-semibold uppercase tracking-widest text-[#a89552]">
+        Match Concluded
+      </span>
+      <h2 className="mt-1 text-3xl font-bold text-[#45413e]">Victory!</h2>
     </div>
-  )
+  );
 }
+
 function LostGame() {
   return (
-    <div>
-      Lost Game
+    <div className="flex flex-col items-center justify-center text-center p-6 max-w-sm">
+      <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-[#f6e2e2] border border-[#ebd0d0] text-5xl shadow-sm">
+        🐍
+      </div>
+      <span className="text-xs font-semibold uppercase tracking-widest text-[#9e6969]">
+        Match Concluded
+      </span>
+      <h2 className="mt-1 text-3xl font-bold text-[#45413e]">Game Over</h2>
     </div>
-  )
+  );
 }
 
 export default Board;

@@ -11,11 +11,8 @@ websocket.on("connection", (socket) => {
         if (parsedData.request === "DICE-ROLL") {
             handlePlayerTurn({ playerSocketObject: socket })
         }
-        else if (parsedData.request === "END-GAME") {
-            handleWebSocketDisconnections(socket);
-        }
         else {
-            socket.send(JSON.stringify({ "type": "ERROR", payload: { "error": "Not a valid socket request!" } }))
+            socket.send(JSON.stringify({ "type": "ERROR", "payload": { "error": "Not a valid socket request!" } }))
         }
     })
     socket.on("close", () => {

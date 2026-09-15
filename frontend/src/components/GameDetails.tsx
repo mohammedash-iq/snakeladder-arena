@@ -13,9 +13,10 @@ function GameDetails() {
         if (response) {
             const socketObj = useSocket.getState();
             gameData.resetGameData();
-            socketObj.socketConnection.send(JSON.stringify({ request: "END-GAME" }));
+            socketObj.updateConnectionState("disconnected");
             socketObj.socketConnection.close();
             navigate("/");
+            return;
         }
         return;
     }

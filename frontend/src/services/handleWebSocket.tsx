@@ -20,10 +20,12 @@ function handleSocketRecieve({ navigateFunction }) {
             return;
         }
         else if (parsedData.type === "WON") {
+            gameData.updateGameUpdates(parsedData.payload.message)
             gameData.updateGameState("won")
             return;
         }
         else if (parsedData.type === "LOST") {
+            gameData.updateGameUpdates(parsedData.payload.message)
             gameData.updateGameState("lost")
             return;
         }
