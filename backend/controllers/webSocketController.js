@@ -19,8 +19,9 @@ function handleWebSocketConnections(socket) {
 //handles the socket connection close
 function handleWebSocketDisconnections(socket) {
     //checks weather the player is already in the waiting list, if yes the player will be removed from the list.
-    if (waitingList.find((ele) => ele == socket)) {
-        waitingList.pop(socket);
+    const waitingIndex = waitingList.indexOf(socket);
+    if (waitingIndex !== -1) {
+        waitingList.splice(waitingIndex, 1);
         return;
     }
     //checks the player in the gamerooms and gracefully realease the connection and lets the other player know the player has left.
