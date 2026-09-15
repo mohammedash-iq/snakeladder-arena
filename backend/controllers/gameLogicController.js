@@ -11,9 +11,9 @@ const ladders = {
     36: 44, 51: 67, 71: 91, 80: 99, 85: 97
 };
 
-function handleStartGame({ socket1, socket2 }) {
-    socket1.send(JSON.stringify({ "type": "GAME-STARTED", "payload": { "message": "Game has started!" } }));
-    socket2.send(JSON.stringify({ "type": "GAME-STARTED", "payload": { "message": "Game has started!" } }));
+function handleStartGame({ player1socket, player2socket }) {
+    player1socket.send(JSON.stringify({ "type": "GAME-STARTED", "payload": { "message": "Game has started!", "player": 1, "TURN": true } }));
+    player2socket.send(JSON.stringify({ "type": "GAME-STARTED", "payload": { "message": "Game has started!", "player": 2, "TURN": false } }));
 }
 
 function handlePlayerTurn({ playerSocketObject }) {
@@ -117,8 +117,9 @@ function handleNotValidMove({ socket, message }) {
 
 // handles the part where the players in the frontend are updated with the new position
 function handleUserUpdation({ gameroom, message, diceValue }) {
-    gameroom.P1.send(JSON.stringify({ "type": "MOVE", payload: { "P1POS": gameroom.P1POS, "P2POS": gameroom.P2POS, "message": message, "dice": diceValue } }))
-    gameroom.P2.send(JSON.stringify({ "type": "MOVE", payload: { "P1POS": gameroom.P1POS, "P2POS": gameroom.P2POS, "message": message, "dice": diceValue } }))
+    const player = gameroom.TURN === "P1" ? 1 : 2;
+    gameroom.P1.send(JSON.stringify({ "type": "MOVE", payload: { "P1POS": gameroom.P1POS, "P2POS": gameroom.P2POS, "message": message, "player": player, "TURN": gameroom.TURN == "P1" ? true : false, "dice": diceValue } }))
+    gameroom.P2.send(JSON.stringify({ "type": "MOVE", payload: { "P1POS": gameroom.P1POS, "P2POS": gameroom.P2POS, "message": message, "player": player, "TURN": gameroom.TURN == "P2" ? true : false, "dice": diceValue } }))
 }
 
 

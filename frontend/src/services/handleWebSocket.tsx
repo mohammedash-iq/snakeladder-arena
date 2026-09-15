@@ -1,9 +1,7 @@
-import { useSocket, usePlayer, useUpdates, useDice } from "../store/connectionStore"
+import { useSocket, useGameData } from "../store/connectionStore"
 function handleSocketRecieve({ navigateFunction }) {
     const socketStore = useSocket.getState();
-    const playerData = usePlayer.getState();
-    const gameUpdates = useUpdates.getState();
-    const diceVal = useDice.getState();
+    const gameData = useGameData.getState();
     const socket = new WebSocket("ws://localhost:8800");
     socketStore.updateSocketConnection(socket)
     socket.onopen = () => {
@@ -17,8 +15,8 @@ function handleSocketRecieve({ navigateFunction }) {
             navigateFunction("/waiting");
         }
         else if (parsedData.type === "INVALID-MOVE") {
-            gameUpdates.updateGameUpdates(parsedData.message);
-            diceVal.updateDiceVal(parsedData.dice)
+            gameData.updateGameUpdates(parsedData.message);
+            gameData.updateDiceVal(parsedData.dice)
         }
         else if (parsedData.type === "WON") {
             alert('You won')
@@ -27,13 +25,12 @@ function handleSocketRecieve({ navigateFunction }) {
             alert("you lose")
         }
         else if (parsedData.type === "GAME-STARTED") {
-            console.log(parsedData)
             navigateFunction("/arena")
         }
         else if (parsedData.type === "MOVE") {
-            playerData.updatePlayer({ player1: parsedData.payload.P1POS, player2: parsedData.payload.P2POS })
-            gameUpdates.updateGameUpdates(parsedData.payload.message)
-            diceVal.updateDiceVal(parsedData.payload.dice);
+            gameData.updatePlayer({ P1POS: parsedData.payload.P1POS, P2POS: parsedData.payload.P2POS, player: parsedData.payload.player, TURN: parsedData.payload.TURN })
+            gameData.updateGameUpdates(parsedData.payload.message)
+            gameData.updateDiceVal(parsedData.payload.dice);
         }
     }
 }

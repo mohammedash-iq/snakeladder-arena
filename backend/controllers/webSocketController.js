@@ -13,7 +13,7 @@ function handleWebSocketConnections(socket) {
         const player1 = socket;
         const player2 = waitingList.shift();
         liveGames.push({ "P1": player1, "P2": player2, "P1POS": 1, "P2POS": 1, "TURN": "P1" })
-        handleStartGame({ socket1: player1, socket2: player2 })
+        handleStartGame({ player1socket: player1, player2socket: player2 })
     }
 }
 //handles the socket connection close

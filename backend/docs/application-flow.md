@@ -1,9 +1,0 @@
-- user gets to the game site.
-- clicks on start game.
-- creats a websocket connection in the backend.
-- pushes the socket object to in memory array called waiting list and lets the user know that he is in user list.
-- if the user is already present in waiting list array, creates a new gameroom class object with uuid and gives the two socket ( player now joined and poped player from waiting list) objects as arguements and stores them in memory list called liveGames.
-- startGame method is called in the gameRoom class with starts the game with letting both the players know.
-- user clicks on dice roll the backend takes that request and handles the dice roll using a random number generator and diceRoll function handles the websocket message from the user, this function validates the player turn, player position, valid moves, hanldes cases like ladder and snake squares and updates the data on the class object in liveGames which was created intially.
-- end game, update player position , not valid move, not valid player( not your turn ) and lost connection all these are the class methods inside gameRoom, which is called according do the diceroll and connection status.
-- if the user is disconnected the backend checks his socket object in waiting list object and then the liveGame list and removes the player from the waiting list and lets the other player know that the user has disconnected and you have won respectively.

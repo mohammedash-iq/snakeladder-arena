@@ -7,19 +7,16 @@ const useSocket = create((set) => ({
     updateConnectionState: (newState) => set({ connectionState: newState })
 }))
 
-const usePlayer = create((set) => ({
-    player1: 1,
-    player2: 1,
-    updatePlayer: (newPos) => set({ player1: newPos.player1, player2: newPos.player2 })
+const useGameData = create((set) => ({
+    P1POS: 1,
+    P2POS: 1,
+    DICE: 0,
+    player: 1,
+    TURN: true,
+    gameUpdates: "Game Started!",
+    updatePlayer: (data) => set({ P1POS: data.P1POS, P2POS: data.P2POS, player: data.player, TURN: data.TURN }),
+    updateGameUpdates: (data) => set({ gameUpdates: data }),
+    updateDiceVal: (data) => set({ DICE: data })
 }))
 
-const useUpdates = create((set) => ({
-    gameUpdates: "Game started",
-    updateGameUpdates: (newUpdate) => set({ gameUpdates: newUpdate })
-}))
-
-const useDice = create((set) => ({
-    diceVal: 0,
-    updateDiceVal: (newDiceVal) => set({ diceVal: newDiceVal })
-}))
-export { useSocket, usePlayer, useUpdates, useDice }
+export { useSocket, useGameData }
