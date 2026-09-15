@@ -28,7 +28,7 @@ function handlePlayerTurn({ playerSocketObject }) {
             return;
         }
         else {
-            handleNotValidMove({ "socket": playerSocketObject, message: "it's not your move!" })
+            handleNotValidMove({ "socket": playerSocketObject, "message": "it's not your move!" })
             return;
         }
     }
@@ -117,9 +117,10 @@ function handleNotValidMove({ socket, message }) {
 
 // handles the part where the players in the frontend are updated with the new position
 function handleUserUpdation({ gameroom, message, diceValue }) {
+    console.log("control inside the handleUserUpdation function")
     const player = gameroom.TURN === "P1" ? 1 : 2;
-    gameroom.P1.send(JSON.stringify({ "type": "MOVE", payload: { "P1POS": gameroom.P1POS, "P2POS": gameroom.P2POS, "message": message, "player": player, "TURN": gameroom.TURN == "P1" ? true : false, "dice": diceValue } }))
-    gameroom.P2.send(JSON.stringify({ "type": "MOVE", payload: { "P1POS": gameroom.P1POS, "P2POS": gameroom.P2POS, "message": message, "player": player, "TURN": gameroom.TURN == "P2" ? true : false, "dice": diceValue } }))
+    gameroom.P1.send(JSON.stringify({ "type": "MOVE", payload: { "P1POS": gameroom.P1POS, "P2POS": gameroom.P2POS, "message": message, "TURN": gameroom.TURN == "P1" ? true : false, "dice": diceValue } }))
+    gameroom.P2.send(JSON.stringify({ "type": "MOVE", payload: { "P1POS": gameroom.P1POS, "P2POS": gameroom.P2POS, "message": message, "TURN": gameroom.TURN == "P2" ? true : false, "dice": diceValue } }))
 }
 
 

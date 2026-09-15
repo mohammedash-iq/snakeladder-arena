@@ -1,10 +1,12 @@
 import { useGameData } from "../store/connectionStore";
 
 function Board() {
-  const gameData = useGameData.getState()
+  const gameData = useGameData()
   return (
     <div className="flex flex-1 items-center justify-center rounded-3xl border border-[#e8e4df] bg-white p-5 shadow-sm">
-      {createBoard({ p1: gameData.P1POS, p2: gameData.P2POS })}
+      {gameData.gameState === "won" ? <WonGame></WonGame> :
+        gameData.gameState === "lost" ? <LostGame></LostGame> :
+          <>{createBoard({ p1: gameData.P1POS, p2: gameData.P2POS })}</>}
     </div>
   );
 }
@@ -52,6 +54,20 @@ function BoardCube({ val, pos }) {
       {content}
     </div>
   );
+}
+function WonGame() {
+  return (
+    <div>
+      Won Game
+    </div>
+  )
+}
+function LostGame() {
+  return (
+    <div>
+      Lost Game
+    </div>
+  )
 }
 
 export default Board;
