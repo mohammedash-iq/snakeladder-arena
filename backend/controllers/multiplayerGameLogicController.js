@@ -1,4 +1,4 @@
-import { findLiveGames } from "../services/gameroomServices.js"
+import { findMultiplayerGameRoom } from "../store/multiplayerGameRoom.js";
 
 
 const snakes = {
@@ -17,7 +17,7 @@ function handleStartGame({ player1socket, player2socket }) {
 }
 
 function handlePlayerTurn({ playerSocketObject }) {
-    const result = findLiveGames({ "socketToBeFound": playerSocketObject })
+    const result = findMultiplayerGameRoom({ "socketToBeFound": playerSocketObject })
     if (result.found) {
         // condition below checks weather  its the palyer's turn to make the move and if yes handles the move.
         if (result.object.TURN === "P1" && result.object.P1 == playerSocketObject) {

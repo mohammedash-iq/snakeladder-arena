@@ -1,6 +1,6 @@
-import { handleStartGame } from "../controllers/gameLogicController.js"
-import { findLiveGames } from "../services/gameroomServices.js"
-import { liveGames } from "../store/gameStore.js";
+import { handleStartGame } from "./multiplayerGameLogicController.js"
+import { findMultiplayerGameRoom } from "../store/multiplayerGameRoom.js"
+import { multiplayerGameRoom } from "../store/multiplayerGameRoom.js";
 
 const waitingList = [];
 // handles socket connections for a new player and adds him to the waiting list or gives him a player to play with
@@ -12,7 +12,7 @@ function handleWebSocketConnections(socket) {
     else {
         const player1 = socket;
         const player2 = waitingList.shift();
-        liveGames.push({ "P1": player1, "P2": player2, "P1POS": 1, "P2POS": 1, "TURN": "P1" })
+        multiplayerGameRoom.push({ "P1": player1, "P2": player2, "P1POS": 1, "P2POS": 1, "TURN": "P1" })
         handleStartGame({ player1socket: player1, player2socket: player2 })
     }
 }
@@ -25,8 +25,8 @@ function handleWebSocketDisconnections(socket) {
         return;
     }
     //checks the player in the gamerooms and gracefully realease the connection and lets the other player know the player has left.
-    // the findLiveGames returns a object { found: boolena, object: the actual object}
-    const gameroom = findLiveGames({ "socketToBeFound": socket });
+    // the findMultiplayerGameRoom returns a object { found: boolena, object: the actual object}
+    const gameroom = findMultiplayerGameRoom({ "socketToBeFound": socket });
     if (gameroom.found) {
         if (gameroom.object.P1 == socket) {
             gameroom.object.P2.send(JSON.stringify({ "type": "WON", "payload": { "message": "Player 1 left the match!, you won!" } }))

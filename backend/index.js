@@ -1,7 +1,9 @@
 import { WebSocketServer } from "ws";
-import { handleWebSocketConnections, handleWebSocketDisconnections } from "./controllers/webSocketController.js";
-import { handlePlayerTurn } from "./controllers/gameLogicController.js";
+import { handleWebSocketConnections, handleWebSocketDisconnections } from "./controllers/multiplayerWebsocketController.js";
+import { handlePlayerTurn } from "./controllers/multiplayerGameLogicController.js";
 
+
+// For the Mutliplayer Game.
 const websocket = new WebSocketServer({ port: 8800 });
 
 websocket.on("connection", (socket) => {
@@ -20,3 +22,6 @@ websocket.on("connection", (socket) => {
     })
 }
 )
+
+
+

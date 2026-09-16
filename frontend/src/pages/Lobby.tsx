@@ -1,11 +1,15 @@
 
-import { handleSocketRecieve } from "../services/handleWebSocket"
+import { multiplayerGameService } from "../services/multiplayerGameService"
+import { singleplayerGameService } from "../services/singleplayerGameService"
 import { useNavigate } from "react-router-dom"
 
 function Lobby() {
     const navigate = useNavigate();
-    function handleStartGame() {
-        handleSocketRecieve({ navigateFunction: navigate })
+    function handleMultiplayerGame() {
+        multiplayerGameService({ navigateFunction: navigate })
+    }
+    function handleSingleplayerGame() {
+        singleplayerGameService({ navigateFunction: navigate })
     }
     return (
 
@@ -13,10 +17,15 @@ function Lobby() {
             <h1 className="text-4xl font-bold text-gray-600">
                 Snakes & Ladders
             </h1>
-            <button onClick={handleStartGame} className="bg-blue-500 mt-5 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg">
-                Start Game
-            </button>
 
+            <div>Multiplayer Game
+                <p>play online with an opponnent</p>
+                <button onClick={handleMultiplayerGame}>Start Multiplayer</button>
+            </div>
+            <div>Computer Game
+                <p>play against the computer</p>
+                <button onClick={handleSingleplayerGame}>Start Computer Game</button>
+            </div>
 
         </div>
     )

@@ -1,5 +1,5 @@
 import { useSocket, useGameData } from "../store/connectionStore"
-function handleSocketRecieve({ navigateFunction }) {
+function multiplayerGameService({ navigateFunction }) {
     const socketStore = useSocket.getState();
     const gameData = useGameData.getState();
     const socket = new WebSocket("ws://localhost:8800");
@@ -31,7 +31,7 @@ function handleSocketRecieve({ navigateFunction }) {
         }
         else if (parsedData.type === "GAME-STARTED") {
             gameData.updatePlayer({ player: parsedData.payload.player, TURN: parsedData.payload.TURN, gameUpdates: parsedData.message })
-            navigateFunction("/arena")
+            navigateFunction("/multiplayerarena")
             return;
         }
         else if (parsedData.type === "MOVE") {
@@ -42,4 +42,4 @@ function handleSocketRecieve({ navigateFunction }) {
         }
     }
 }
-export { handleSocketRecieve }
+export { multiplayerGameService }
