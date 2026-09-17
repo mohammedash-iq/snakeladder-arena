@@ -31,11 +31,11 @@ function multiplayerGameService({ navigateFunction }) {
         }
         else if (parsedData.type === "GAME-STARTED") {
             gameData.updatePlayer({ player: parsedData.payload.player, TURN: parsedData.payload.TURN, gameUpdates: parsedData.message })
-            navigateFunction("/multiplayerarena")
+            navigateFunction("/arena")
             return;
         }
         else if (parsedData.type === "MOVE") {
-            gameData.updatePlayer({ P1POS: parsedData.payload.P1POS, P2POS: parsedData.payload.P2POS, DICE: parsedData.DICE, TURN: parsedData.payload.TURN })
+            gameData.updatePlayer({ P1POS: parsedData.payload.P1POS, P2POS: parsedData.payload.P2POS, TURN: parsedData.payload.TURN })
             gameData.updateGameUpdates(parsedData.payload.message)
             gameData.updateDiceVal(parsedData.payload.dice);
             return;

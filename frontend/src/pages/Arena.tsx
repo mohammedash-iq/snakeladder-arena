@@ -1,7 +1,7 @@
 import Board from "../components/Board";
 import GameDetails from "../components/GameDetails"
 
-function MultiplayerArena() {
+function Arena() {
     return (
         <div className="min-h-screen bg-[#f8f7f4] p-6">
             <div className="mx-auto flex max-w-6xl flex-col gap-6 lg:flex-row">
@@ -14,6 +14,5 @@ function MultiplayerArena() {
     )
 }
 
-export default MultiplayerArena
-
+export default Arena
 

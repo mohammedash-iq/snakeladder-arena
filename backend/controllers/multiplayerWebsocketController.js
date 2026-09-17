@@ -4,7 +4,7 @@ import { multiplayerGameRoom } from "../store/multiplayerGameRoom.js";
 
 const waitingList = [];
 // handles socket connections for a new player and adds him to the waiting list or gives him a player to play with
-function handleWebSocketConnections(socket) {
+function handleMultiplayerSocketConnection(socket) {
     if (waitingList.length === 0 || socket in waitingList) {
         waitingList.push(socket);
         socket.send(JSON.stringify({ "type": "WAITING", "payload": { "message": "waiting for other player to join!" } }))
@@ -17,7 +17,7 @@ function handleWebSocketConnections(socket) {
     }
 }
 //handles the socket connection close
-function handleWebSocketDisconnections(socket) {
+function handleMultiplayerSocketDisconnection(socket) {
     //checks weather the player is already in the waiting list, if yes the player will be removed from the list.
     const waitingIndex = waitingList.indexOf(socket);
     if (waitingIndex !== -1) {
@@ -35,4 +35,4 @@ function handleWebSocketDisconnections(socket) {
         gameroom.object.P1.send(JSON.stringify({ "type": "WON", "payload": { "message": "Player 1 left the match!, you won!" } }))
     }
 }
-export { handleWebSocketConnections, handleWebSocketDisconnections };
+export { handleMultiplayerSocketConnection, handleMultiplayerSocketDisconnection };

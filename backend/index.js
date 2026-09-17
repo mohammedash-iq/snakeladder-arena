@@ -1,5 +1,7 @@
 import { WebSocketServer } from "ws";
-import { handleWebSocketConnections, handleWebSocketDisconnections } from "./controllers/multiplayerWebsocketController.js";
+import { handleMultiplayerSocketConnection, handleMultiplayerSocketDisconnection } from "./controllers/multiplayerWebsocketController.js";
+import { handleSinglePlayerSocketConnection, handleSinglePlayerSocketDisconnection } from "./controllers/singlePlayerWebsocketController.js"
+import { handleSinglePlayerTurn } from "./controllers/singlePlayerGameLogicController.js"
 import { handlePlayerTurn } from "./controllers/multiplayerGameLogicController.js";
 
 
@@ -7,7 +9,7 @@ import { handlePlayerTurn } from "./controllers/multiplayerGameLogicController.j
 const websocket = new WebSocketServer({ port: 8800 });
 
 websocket.on("connection", (socket) => {
-    handleWebSocketConnections(socket);
+    handleMultiplayerSocketConnection(socket);
     socket.on("message", (data) => {
         const parsedData = JSON.parse(data.toString());
         if (parsedData.request === "DICE-ROLL") {
@@ -18,10 +20,25 @@ websocket.on("connection", (socket) => {
         }
     })
     socket.on("close", () => {
-        handleWebSocketDisconnections(socket);
+        handleMultiplayerSocketDisconnection(socket);
     })
 }
 )
 
+// weboscket for the sinle player game
+const webSocket1 = new WebSocketServer({ port: 8900 })
+
+webSocket1.on("connection", (socket) => {
+    handleSinglePlayerSocketConnection({ "socket": socket });
+    socket.on("message", (data) => {
+        const parsedData = JSON.parse(data);
+        if (parsedData.request === "DICE-ROLL") {
+            handleSinglePlayerTurn({ playerSocketObject: socket })
+        }
+    })
+    socket.on("close", () => {
+        handleSinglePlayerSocketDisconnection({ "socket": socket })
+    })
+})
 
 

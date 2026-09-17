@@ -28,8 +28,12 @@ function GameDetails() {
             </div>
 
             <div>
-                <div>{gameData.player === 1 ? "Player1" : "Player2"}</div>
-                <div>{gameData.TURN ? "your Turn" : "Other Player"}</div>
+                {gameData.SINGLEPLAYER ?
+                    <><div>Against Computer</div>
+                        <div>{gameData.TURN ? "your Turn" : "Computer's Turn"}</div></> :
+                    <><div>{gameData.player === 1 ? "Player1" : "Player2"}</div>
+                        <div>{gameData.TURN ? "your Turn" : "Other Player"}</div></>}
+
             </div>
             <div className="rounded-2xl bg-[#f7f5f2] p-5">
                 <p className="text-center text-sm font-medium text-[#918b85]"> Dice Result</p>

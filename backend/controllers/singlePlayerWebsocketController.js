@@ -1,17 +1,19 @@
-// import express from "express";
+import { singlePlayerGameRoom, findSinglePlayerGameRoom } from "../store/singlePlayerGameRoom.js"
 
-// const singlePlayerApp = express();
-// singlePlayerApp.use(express.json());
+function handleSinglePlayerSocketConnection({ socket }) {
+    singlePlayerGameRoom.push({ "PLAYER": socket, "TURN": "PLAYER", "PLAYERPOS": 1, "COMPUTERPOS": 1 })
+    socket.send(JSON.stringify({ "type": "SINGLE-PLAYER-GAME-STARTED", "payload": { "message": "Game Started, your move!", "player": "P1", "TURN": true, "PLAYERPOS": 1, "COMPUTERPOS": 1 } }))
+    return;
+}
 
-// singlePlayerApp.get("/api/start-single-player-game", (req, res) => {
-//     // Implement the logic for the single-player game here
-//     if (req.body.type === "START-SINGLE-PLAYER-GAME") {
-//         const gameRoom = createGameRoom()
-//         res.json({ "type": "SINGLE-PLAYER-GAME-STARTED", "payload": { "message": "Single-player game started!", "gameRoom": gameRoom } })
-//     }
-//     else {
-//         res.json({ "type": "ERROR", "payload": { "error": "Not a valid request!" } })
-//     }
-// })
 
-// export { singlePlayerApp }
+function handleSinglePlayerSocketDisconnection({ socket }) {
+    const gameroom = findSinglePlayerGameRoom({ "socketToBeFound": socket });
+    if (gameroom.found) {
+        const index = singlePlayerGameRoom.indexOf(gameroom);
+        singlePlayerGameRoom.splice(index, 1);
+    }
+}
+
+
+export { handleSinglePlayerSocketConnection, handleSinglePlayerSocketDisconnection }

@@ -1,15 +1,5 @@
 import { findMultiplayerGameRoom } from "../store/multiplayerGameRoom.js";
-
-
-const snakes = {
-    16: 6, 47: 26, 49: 11, 56: 53, 62: 19,
-    64: 60, 87: 24, 93: 73, 95: 75, 98: 78
-};
-
-const ladders = {
-    2: 38, 4: 14, 9: 31, 21: 42, 28: 84,
-    36: 44, 51: 67, 71: 91, 80: 99, 85: 97
-};
+import { rollDice, updatePlayerPostion } from "../services/gameLogicService.js"
 
 function handleStartGame({ player1socket, player2socket }) {
     player1socket.send(JSON.stringify({ "type": "GAME-STARTED", "payload": { "message": "Game has started!", "player": 1, "TURN": true } }));
@@ -79,23 +69,6 @@ function handleDiceRoll({ gameroom, currentPlayer }) {
     }
 }
 
-//checks for all the moves in the board and updates the playerpositon.
-function updatePlayerPostion({ diceResult, playerPosition }) {
-    const pos = playerPosition + diceResult;
-    if (pos in ladders) {
-        return { "newPosition": ladders[pos], "message": `Player moved from${playerPosition} to ${pos} (ladder ${ladders[pos]})` };
-    }
-    else if (pos in snakes) {
-        return { "newPosition": snakes[pos], "message": `Player moved from ${playerPosition} to ${pos} (snake ${snakes[pos]})` };
-    }
-    return { "newPosition": pos, "message": `Player  moved from ${playerPosition} to ${pos}` };
-}
-
-//generates a random number between 1 and 6 for the dice.
-function rollDice() {
-    const randInt = Math.random() * (7 - 1) + 1;
-    return Math.floor(randInt);
-}
 
 // winning a match is handeled my this fuction
 function handleGameVictory({ gameroom, player }) {
@@ -117,7 +90,6 @@ function handleNotValidMove({ socket, message }) {
 
 // handles the part where the players in the frontend are updated with the new position
 function handleUserUpdation({ gameroom, message, diceValue }) {
-    console.log("control inside the handleUserUpdation function")
     const player = gameroom.TURN === "P1" ? 1 : 2;
     gameroom.P1.send(JSON.stringify({ "type": "MOVE", payload: { "P1POS": gameroom.P1POS, "P2POS": gameroom.P2POS, "message": message, "TURN": gameroom.TURN == "P1" ? true : false, "dice": diceValue } }))
     gameroom.P2.send(JSON.stringify({ "type": "MOVE", payload: { "P1POS": gameroom.P1POS, "P2POS": gameroom.P2POS, "message": message, "TURN": gameroom.TURN == "P2" ? true : false, "dice": diceValue } }))

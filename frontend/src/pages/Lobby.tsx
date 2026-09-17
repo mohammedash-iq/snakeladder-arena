@@ -1,6 +1,6 @@
 
 import { multiplayerGameService } from "../services/multiplayerGameService"
-import { singleplayerGameService } from "../services/singleplayerGameService"
+import { singlePlayerGameService } from "../services/singlePlayerGameService"
 import { useNavigate } from "react-router-dom"
 
 function Lobby() {
@@ -9,7 +9,7 @@ function Lobby() {
         multiplayerGameService({ navigateFunction: navigate })
     }
     function handleSingleplayerGame() {
-        singleplayerGameService({ navigateFunction: navigate })
+        singlePlayerGameService({ navigateFunction: navigate })
     }
     return (
 

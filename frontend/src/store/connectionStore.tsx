@@ -13,12 +13,14 @@ const useGameData = create((set) => ({
     DICE: null,
     player: null,
     TURN: false,
+    SINGLEPLAYER: false,
     gameUpdates: "Game Started!",
     gameState: "playing",
     updatePlayer: (data) => set({ P1POS: data.P1POS, P2POS: data.P2POS, player: data.player, TURN: data.TURN }),
     updateGameUpdates: (data) => set({ gameUpdates: data }),
     updateGameState: (data) => set({ gameState: data }),
     updateDiceVal: (data) => set({ DICE: data }),
+    updateSinglePlayerMode: (data) => set({ SINGLEPLAYER: data }),
     resetGameData: () => set({ P1POS: 1, P2POS: 1, DICE: null, player: null, TURN: false, gameUpdates: "Game Started!", gameState: "playing" })
 }))
 
