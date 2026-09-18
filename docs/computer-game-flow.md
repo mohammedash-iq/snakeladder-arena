@@ -1,0 +1,7 @@
+- frontend when clicked on start single player game"
+- a websocket connection is made and the backend creates a game room which has all the game detiails which gets pushed to a in memory array, which maintains all the live games.
+- when the user makes the move, the socket recieves that message and rolls the dice , updates the changes and most importantly after a timer(2s), it makes one more dice roll and one more updation to the gameroom, this is computer making its move.
+- this cycle continues until one of them loses or wins the match.
+- if the user gets disconnected from the socket , the backend removes that specific users game room from the in memory array list.
+- everytime the user gets the type "MOVE" socket packet it also consists a boolean value as "TURN" which tells the frontend that its time to make the move.
+- all the game logic, roll dice, updation and match results are handeled by the backend.

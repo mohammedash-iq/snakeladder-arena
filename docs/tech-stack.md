@@ -1,0 +1,3 @@
+- react and tailwind for the frontend.
+- node with websocket (ws) for the backend.
+- although backend is js and frontend is ts ,frontend never had a stict behavior towards the ts rules.

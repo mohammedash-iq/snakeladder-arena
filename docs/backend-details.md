@@ -11,3 +11,11 @@
         }
     ]
 
+
+- live single player games array structure to store the live games against the computer.
+    const singlePlayerGameRoom =[
+        {   
+            PLAYER:WebSocket,PLAYERPOS:1,COMPUTERPOS:1,TURN:"player/computer"
+        }
+    ]
+

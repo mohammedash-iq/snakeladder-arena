@@ -1,6 +1,0 @@
-- initially the fe sends a request for the match
-- backend gets the response with appropriate message type with json
-- this in the backend generates a game room for the match and sends the initial data to the user
-- fe updates the values to the baord and game starts 
-- everytime the use clicks on dice the request is sent to the backend and backend sends back its move as a response.
-- this response data is used to update the fe

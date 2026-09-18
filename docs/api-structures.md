@@ -51,6 +51,17 @@
             message:"game has started"
         }
     }
+3. when the single playet game starts and backend creates a websocket connection :
+    { 
+        "type": "SINGLE-PLAYER-GAME-STARTED", 
+        "payload": { 
+            "message": "Game Started, your move!", 
+            "player": "P1", 
+            "TURN": true, 
+            "PLAYERPOS": 1, 
+            "COMPUTERPOS": 1 
+            }
+    }
 
 -api structure for websocket request from the client:
 
