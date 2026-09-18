@@ -1,4 +1,4 @@
--api structure for websocket responses from the backend for DICE-ROLL request by the frontend:
+-api structure for websocket responses from the backend for DICE-ROLL request by the frontend for multiplayer Game:
 1. when the move is valid- 
     {
         type:'MOVE',
